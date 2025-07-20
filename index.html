@@ -16,7 +16,7 @@
       position: relative;
       min-height: 100vh;
     }
-    
+   
     .cross {
       position: absolute;
       color: rgba(76, 201, 240, 0.3);
@@ -25,7 +25,7 @@
       z-index: -1;
       pointer-events: none;
     }
-    
+   
     @keyframes float {
       0% {
         transform: translateY(100vh) translateX(0) rotate(0deg);
@@ -42,7 +42,7 @@
         opacity: 0;
       }
     }
-    
+   
     .developer-card {
       position: fixed;
       bottom: 15px;
@@ -59,32 +59,32 @@
       transition: all 0.3s ease;
       font-size: 14px;
     }
-    
+   
     .developer-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
     }
-    
+   
     .dev-title {
       font-size: 12px;
       color: #4cc9f0;
       margin-bottom: 2px;
       font-weight: bold;
     }
-    
+   
     .dev-name {
       font-size: 15px;
       color: white;
       margin-bottom: 5px;
       font-weight: bold;
     }
-    
+   
     .contact-container {
       display: flex;
       align-items: center;
       gap: 6px;
     }
-    
+   
     .whatsapp-btn {
       display: flex;
       align-items: center;
@@ -97,18 +97,18 @@
       font-size: 12px;
       transition: all 0.3s;
     }
-    
+   
     .whatsapp-btn:hover {
       background: #128C7E;
       transform: scale(1.05);
     }
-    
+   
     .whatsapp-icon {
       width: 14px;
       height: 14px;
       filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
     }
-    
+   
     .phone-number {
       font-family: 'Courier New', monospace;
       font-size: 13px;
@@ -117,7 +117,7 @@
       display: inline-block;
       margin-left: 3px;
     }
-    
+   
     .question, .result, #start-screen {
       margin: 20px auto;
       max-width: 800px;
@@ -126,7 +126,7 @@
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
-    
+   
     .answers {
       display: flex;
       flex-wrap: wrap;
@@ -134,7 +134,7 @@
       gap: 10px;
       margin-top: 20px;
     }
-    
+   
     .answers button {
       background-color: #16213e;
       color: white;
@@ -146,12 +146,12 @@
       transition: all 0.3s;
       min-width: 120px;
     }
-    
+   
     .answers button:hover {
       background-color: #4cc9f0;
       color: #16213e;
     }
-    
+   
     input {
       padding: 12px;
       border-radius: 8px;
@@ -162,7 +162,7 @@
       color: white;
       width: 250px;
     }
-    
+   
     button#start-button {
       background-color: #4CAF50;
       color: white;
@@ -173,30 +173,30 @@
       cursor: pointer;
       margin-top: 20px;
     }
-    
+   
     h1 {
       color: #4cc9f0;
       font-size: 28px;
       margin-bottom: 15px;
     }
-    
+   
     h2 {
       font-size: 22px;
       margin-bottom: 15px;
       color: #ffffff;
     }
-    
+   
     .bible-verse {
       font-style: italic;
       color: #4cc9f0;
       margin-top: 15px;
       font-size: 16px;
     }
-    
+   
     .hidden {
       display: none;
     }
-    
+   
     /* أنماط التصنيف في الصفحة الرئيسية */
     .main-leaderboard {
       margin: 30px auto;
@@ -206,7 +206,7 @@
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
-    
+   
     .main-leaderboard h3 {
       color: #4cc9f0;
       margin: 0 0 15px 0;
@@ -215,7 +215,7 @@
       border-bottom: 1px solid #4cc9f0;
       padding-bottom: 8px;
     }
-    
+   
     .player-score {
       display: flex;
       justify-content: space-between;
@@ -224,15 +224,15 @@
       font-size: 16px;
       transition: all 0.3s;
     }
-    
+   
     .player-score:hover {
       background: rgba(76, 201, 240, 0.1);
     }
-    
+   
     .player-score:last-child {
       border-bottom: none;
     }
-    
+   
     .player-name {
       color: white;
       white-space: nowrap;
@@ -240,39 +240,90 @@
       text-overflow: ellipsis;
       max-width: 60%;
     }
-    
+   
     .player-points {
       color: #4cc9f0;
       font-weight: bold;
       margin-left: 10px;
     }
-    
+   
     .rank-1 {
       background: rgba(255, 215, 0, 0.15);
       border-right: 3px solid gold;
     }
-    
+   
     .rank-2 {
       background: rgba(192, 192, 192, 0.15);
       border-right: 3px solid silver;
     }
-    
+   
     .rank-3 {
       background: rgba(205, 127, 50, 0.15);
       border-right: 3px solid #cd7f32;
     }
-    
+   
     .no-scores {
       text-align: center;
       color: #aaa;
       padding: 20px;
       font-size: 16px;
     }
+    
+    /* أنماط جديدة لعرض الأجوبة الخاطئة */
+    .wrong-answers-section {
+      margin-top: 30px;
+      text-align: right;
+      background: rgba(255, 0, 0, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      border-right: 3px solid #ff4d4d;
+    }
+    
+    .wrong-answers-title {
+      color: #ff4d4d;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    
+    .wrong-answer-item {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: rgba(255, 77, 77, 0.1);
+      border-radius: 5px;
+    }
+    
+    .question-text {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .your-answer {
+      color: #ff4d4d;
+    }
+    
+    .correct-answer {
+      color: #4cc9f0;
+    }
+    
+    .show-answers-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s;
+    }
+    
+    .show-answers-btn:hover {
+      background: #ff3333;
+    }
   </style>
 </head>
 <body>
   <div id="crosses-container"></div>
-  
+ 
   <!-- بطاقة المطور -->
   <div class="developer-card">
     <div class="dev-title">Developer</div>
@@ -292,7 +343,7 @@
     <input type="text" id="player-name" placeholder="اسمك الكريم" required />
     <br />
     <button id="start-button" onclick="startGame()">ابدأ اللعبة</button>
-    
+   
     <!-- لوحة المتصدرين في الصفحة الرئيسية -->
     <div class="main-leaderboard" id="main-leaderboard">
       <h3>أفضل اللاعبين</h3>
@@ -310,6 +361,9 @@
     // متغير لتخزين بيانات اللاعبين
     let players = JSON.parse(localStorage.getItem('bibleQuizPlayers')) || [];
     
+    // متغير لتخزين الأجوبة الخاطئة
+    let wrongAnswers = [];
+   
     let currentQuestion = 0;
     let score = 0;
     let playerName = '';
@@ -317,7 +371,7 @@
     function createCrosses() {
       const container = document.getElementById('crosses-container');
       const crossCount = 30;
-      
+     
       for (let i = 0; i < crossCount; i++) {
         const cross = document.createElement('div');
         cross.className = 'cross';
@@ -334,7 +388,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       createCrosses();
       updateLeaderboard();
-      
+     
       const playerNameInput = document.getElementById('player-name');
       playerNameInput.addEventListener('focus', function() {
         window.scrollTo(0, 0);
@@ -437,15 +491,18 @@
 
     function startGame() {
       playerName = document.getElementById('player-name').value.trim();
-      
+     
       if (!playerName) {
         alert('من فضلك اكتب اسمك');
         return;
       }
-      
+     
+      // إعادة تعيين الأجوبة الخاطئة عند بدء لعبة جديدة
+      wrongAnswers = [];
+     
       // إخفاء لوحة المتصدرين عند بدء اللعبة
       document.getElementById('main-leaderboard').classList.add('hidden');
-      
+     
       document.getElementById('start-screen').classList.add('hidden');
       document.getElementById('question-container').classList.remove('hidden');
       showQuestion();
@@ -454,12 +511,12 @@
     function showQuestion() {
       const container = document.getElementById('question-container');
       container.innerHTML = '';
-      
+     
       if (currentQuestion >= questions.length) {
         finishGame();
         return;
       }
-      
+     
       const question = questions[currentQuestion];
       const qDiv = document.createElement('div');
       qDiv.className = 'question';
@@ -471,24 +528,33 @@
       question.options.forEach(opt => {
         const btn = document.createElement('button');
         btn.textContent = opt;
-        btn.onclick = () => checkAnswer(opt, question.correct);
+        btn.onclick = () => checkAnswer(opt, question.correct, question.text());
         answersDiv.appendChild(btn);
       });
 
       qDiv.appendChild(answersDiv);
-      
+     
       if (question.verse) {
         const verseDiv = document.createElement('div');
         verseDiv.className = 'bible-verse';
         verseDiv.textContent = question.verse;
         qDiv.appendChild(verseDiv);
       }
-      
+     
       container.appendChild(qDiv);
     }
 
-    function checkAnswer(selected, correct) {
-      if (selected === correct) score++;
+    function checkAnswer(selected, correct, questionText) {
+      if (selected !== correct) {
+        // تخزين الإجابة الخاطئة
+        wrongAnswers.push({
+          question: questionText,
+          yourAnswer: selected,
+          correctAnswer: correct
+        });
+      } else {
+        score++;
+      }
       currentQuestion++;
       showQuestion();
     }
@@ -496,16 +562,16 @@
     function finishGame() {
       document.getElementById('question-container').classList.add('hidden');
       const result = document.getElementById('result');
-      
+     
       result.classList.remove('hidden');
-      
+     
       // حفظ نتيجة اللاعب
       savePlayerResult(playerName, score);
-      
+     
       if (score === questions.length) {
         const winSound = document.getElementById('win-sound');
         winSound.play().catch(e => console.log('تعذر تشغيل الصوت:', e));
-        
+       
         result.innerHTML = `
           <h2>مبروك يا ${playerName}! كسبت بدرجة كاملة (15/15) 🎉</h2>
           <p>معرفتك العظيمة بالكتاب المقدس تفرح القلب!</p>
@@ -515,14 +581,35 @@
           </button>
         `;
       } else {
-        result.innerHTML = `
+        let resultHTML = `
           <h2>${playerName}، درجتك النهائية: ${score} من ${questions.length}</h2>
           <p>هذه فرصتك لقراءة المزيد من الكتاب المقدس!</p>
           <div class="bible-verse">كلمتك مصباح لرجلي ونور لسبيلي (مزمور 119: 105)</div>
+        `;
+        
+        // إضافة قسم الأجوبة الخاطئة إذا وجدت
+        if (wrongAnswers.length > 0) {
+          resultHTML += `
+            <div class="wrong-answers-section">
+              <div class="wrong-answers-title">الأجوبة التي تحتاج مراجعة:</div>
+              ${wrongAnswers.map(answer => `
+                <div class="wrong-answer-item">
+                  <div class="question-text">${answer.question}</div>
+                  <div>إجابتك: <span class="your-answer">${answer.yourAnswer}</span></div>
+                  <div>الإجابة الصحيحة: <span class="correct-answer">${answer.correctAnswer}</span></div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+        
+        resultHTML += `
           <button onclick="resetGame()" style="margin-top:20px; padding:10px 20px; background:#4cc9f0; color:#16213e; border:none; border-radius:5px; cursor:pointer;">
             العودة للصفحة الرئيسية
           </button>
         `;
+        
+        result.innerHTML = resultHTML;
       }
     }
 
@@ -530,14 +617,15 @@
       // إعادة تعيين اللعبة
       currentQuestion = 0;
       score = 0;
+      wrongAnswers = [];
       document.getElementById('player-name').value = '';
-      
+     
       // إظهار الصفحة الرئيسية ولوحة المتصدرين
       document.getElementById('start-screen').classList.remove('hidden');
       document.getElementById('main-leaderboard').classList.remove('hidden');
       document.getElementById('result').classList.add('hidden');
       document.getElementById('question-container').classList.add('hidden');
-      
+     
       // تحديث لوحة المتصدرين
       updateLeaderboard();
     }
@@ -545,7 +633,7 @@
     function savePlayerResult(name, points) {
       // التحقق إذا كان اللاعب موجود بالفعل
       const existingPlayerIndex = players.findIndex(p => p.name.toLowerCase() === name.toLowerCase());
-      
+     
       if (existingPlayerIndex !== -1) {
         // تحديث النقاط فقط إذا كانت أعلى
         if (points > players[existingPlayerIndex].points) {
@@ -560,7 +648,7 @@
           date: new Date().toISOString()
         });
       }
-      
+     
       // ترتيب اللاعبين حسب النقاط (من الأعلى للأقل) ثم حسب التاريخ (الأحدث أولاً)
       players.sort((a, b) => {
         if (b.points !== a.points) {
@@ -568,10 +656,10 @@
         }
         return new Date(b.date) - new Date(a.date);
       });
-      
+     
       // حفظ في localStorage
       localStorage.setItem('bibleQuizPlayers', JSON.stringify(players));
-      
+     
       // تحديث لوحة المتصدرين
       updateLeaderboard();
     }
@@ -579,15 +667,15 @@
     function updateLeaderboard() {
       const leaderboardContent = document.getElementById('leaderboard-content');
       leaderboardContent.innerHTML = '';
-      
+     
       // عرض أفضل 10 لاعبين فقط
       const topPlayers = players.slice(0, 10);
-      
+     
       if (topPlayers.length === 0) {
         leaderboardContent.innerHTML = '<div class="no-scores">لا توجد نتائج بعد</div>';
         return;
       }
-      
+     
       topPlayers.forEach((player, index) => {
         const playerDiv = document.createElement('div');
         playerDiv.className = `player-score rank-${index + 1}`;
