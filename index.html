@@ -353,6 +353,20 @@
       display: none;
       margin-top: 5px;
     }
+    .timer-container {
+      margin: 15px 0;
+      font-size: 18px;
+      color: #4cc9f0;
+    }
+    .timer {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .timeout-message {
+      color: #ff4d4d;
+      font-size: 20px;
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
@@ -403,6 +417,8 @@
     let currentQuestion = 0;
     let score = 0;
     let playerName = '';
+    let timer;
+    let timeLeft = 15;
 
     document.addEventListener('DOMContentLoaded', function() {
       if (!window.firebaseDatabase) {
@@ -499,6 +515,60 @@
       document.getElementById('main-leaderboard').classList.add('hidden');
       document.getElementById('start-screen').classList.add('hidden');
       document.getElementById('question-container').classList.remove('hidden');
+      showQuestion();
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      timeLeft = 15;
+      updateTimerDisplay();
+      
+      timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          timeOut();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const timerElement = document.getElementById('timer');
+      if (timerElement) {
+        timerElement.textContent = timeLeft;
+        
+        if (timeLeft <= 5) {
+          timerElement.style.color = '#ff4d4d';
+        } else {
+          timerElement.style.color = '#4cc9f0';
+        }
+      }
+    }
+
+    function timeOut() {
+      const container = document.getElementById('question-container');
+      container.innerHTML = `
+        <div class="timeout-message">
+          <h2>انتهى الوقت!</h2>
+          <p>لم تقم بالإجابة على السؤال في الوقت المحدد</p>
+          <button onclick="nextQuestionAfterTimeout()" style="background-color: #4cc9f0; color: #16213e; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 20px;">
+            التالي
+          </button>
+        </div>
+      `;
+      
+      const currentQ = questions[currentQuestion];
+      wrongAnswers.push({
+        question: currentQ.text(),
+        yourAnswer: 'لم يتم الإجابة',
+        correctAnswer: currentQ.correct
+      });
+    }
+
+    function nextQuestionAfterTimeout() {
+      currentQuestion++;
       showQuestion();
     }
 
@@ -607,7 +677,12 @@
       const question = questions[currentQuestion];
       const qDiv = document.createElement('div');
       qDiv.className = 'question';
-      qDiv.innerHTML = `<h2>سؤال ${currentQuestion + 1}/${questions.length}: ${question.text()}</h2>`;
+      qDiv.innerHTML = `
+        <h2>سؤال ${currentQuestion + 1}/${questions.length}: ${question.text()}</h2>
+        <div class="timer-container">
+          الوقت المتبقي: <span id="timer" class="timer">15</span> ثانية
+        </div>
+      `;
 
       const answersDiv = document.createElement('div');
       answersDiv.className = 'answers';
@@ -615,7 +690,10 @@
       question.options.forEach(opt => {
         const btn = document.createElement('button');
         btn.textContent = opt;
-        btn.onclick = () => checkAnswer(opt, question.correct, question.text());
+        btn.onclick = () => {
+          clearInterval(timer);
+          checkAnswer(opt, question.correct, question.text());
+        };
         answersDiv.appendChild(btn);
       });
 
@@ -629,6 +707,7 @@
       }
      
       container.appendChild(qDiv);
+      startTimer();
     }
 
     function checkAnswer(selected, correct, questionText) {
@@ -646,6 +725,7 @@
     }
 
     function finishGame() {
+      clearInterval(timer);
       document.getElementById('question-container').classList.add('hidden');
       const result = document.getElementById('result');
       result.classList.remove('hidden');
@@ -657,11 +737,13 @@
         winSound.play().catch(e => console.log('تعذر تشغيل الصوت:', e));
        
         result.innerHTML = `
-          <h2>مبروك يا ${playerName}! كسبت بدرجة كاملة (15/15) 🎉</h2>
+          <h2>مبروك يا ${playerName}! كسبت بدرجة كاملة (15/15) �</h2>
           <p>معرفتك العظيمة بالكتاب المقدس تفرح القلب!</p>
           <div class="bible-verse">كل الكتاب هو موحى به من الله ونافع للتعليم (2 تيموثاوس 3: 16)</div>
           ${generateWrongAnswersSection()}
-          <button onclick="resetGame()" class="restart-btn">العودة للصفحة الرئيسية</button>
+          <button onclick="resetGame()" style="background-color: #4cc9f0; color: #16213e; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 20px;">
+            العودة للصفحة الرئيسية
+          </button>
         `;
       } else {
         result.innerHTML = `
@@ -669,7 +751,9 @@
           <p>هذه فرصتك لقراءة المزيد من الكتاب المقدس!</p>
           <div class="bible-verse">كلمتك مصباح لرجلي ونور لسبيلي (مزمور 119: 105)</div>
           ${generateWrongAnswersSection()}
-          <button onclick="resetGame()" class="restart-btn">العودة للصفحة الرئيسية</button>
+          <button onclick="resetGame()" style="background-color: #4cc9f0; color: #16213e; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 20px;">
+            العودة للصفحة الرئيسية
+          </button>
         `;
       }
     }
@@ -700,6 +784,7 @@
     }
 
     function resetGame() {
+      clearInterval(timer);
       currentQuestion = 0;
       score = 0;
       wrongAnswers = [];
@@ -712,21 +797,14 @@
     }
 
     function savePlayerResult(name, points) {
-      const existingPlayerIndex = players.findIndex(p => p.name.toLowerCase() === name.toLowerCase());
+      const existingPlayer = players.find(p => p.name.toLowerCase() === name.toLowerCase());
       
-      if (existingPlayerIndex !== -1) {
-        if (points > players[existingPlayerIndex].score) {
-          players[existingPlayerIndex].score = points;
-          players[existingPlayerIndex].date = new Date().toISOString();
-          updatePlayerInFirebase(players[existingPlayerIndex]);
-        }
-      } else {
+      if (!existingPlayer) {
         const newPlayer = {
           name: name,
           score: points,
           date: new Date().toISOString()
         };
-        players.push(newPlayer);
         savePlayerToFirebase(newPlayer);
       }
     }
