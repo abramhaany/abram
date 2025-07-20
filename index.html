@@ -6,7 +6,7 @@
   <title>أسئلة الكتاب المقدس ✝️</title>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue, query, limitToLast, orderByChild } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js";
+    import { getDatabase, ref, push, onValue, query, limitToLast, orderByChild, update, set } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA0fXyDKAC3JrtwMwHR1F15LrM4DwK8Flg",
@@ -28,6 +28,8 @@
     window.firebaseQuery = query;
     window.firebaseLimitToLast = limitToLast;
     window.firebaseOrderByChild = orderByChild;
+    window.firebaseUpdate = update;
+    window.firebaseSet = set;
   </script>
   
   <style>
@@ -42,7 +44,6 @@
       position: relative;
       min-height: 100vh;
     }
-   
     .cross {
       position: absolute;
       color: rgba(76, 201, 240, 0.3);
@@ -51,14 +52,12 @@
       z-index: -1;
       pointer-events: none;
     }
-   
     @keyframes float {
       0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
       20% { opacity: 0.3; }
       80% { opacity: 0.3; }
       100% { transform: translateY(-100px) translateX(100px) rotate(360deg); opacity: 0; }
     }
-   
     .developer-card {
       position: fixed;
       bottom: 15px;
@@ -75,32 +74,27 @@
       transition: all 0.3s ease;
       font-size: 14px;
     }
-   
     .developer-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
     }
-   
     .dev-title {
       font-size: 12px;
       color: #4cc9f0;
       margin-bottom: 2px;
       font-weight: bold;
     }
-   
     .dev-name {
       font-size: 15px;
       color: white;
       margin-bottom: 5px;
       font-weight: bold;
     }
-   
     .contact-container {
       display: flex;
       align-items: center;
       gap: 6px;
     }
-   
     .whatsapp-btn {
       display: flex;
       align-items: center;
@@ -113,18 +107,15 @@
       font-size: 12px;
       transition: all 0.3s;
     }
-   
     .whatsapp-btn:hover {
       background: #128C7E;
       transform: scale(1.05);
     }
-   
     .whatsapp-icon {
       width: 14px;
       height: 14px;
       filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
     }
-   
     .phone-number {
       font-family: 'Courier New', monospace;
       font-size: 13px;
@@ -133,7 +124,6 @@
       display: inline-block;
       margin-left: 3px;
     }
-   
     .question, .result, #start-screen {
       margin: 20px auto;
       max-width: 800px;
@@ -142,7 +132,6 @@
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
-   
     .answers {
       display: flex;
       flex-wrap: wrap;
@@ -150,7 +139,6 @@
       gap: 10px;
       margin-top: 20px;
     }
-   
     .answers button {
       background-color: #16213e;
       color: white;
@@ -162,12 +150,10 @@
       transition: all 0.3s;
       min-width: 120px;
     }
-   
     .answers button:hover {
       background-color: #4cc9f0;
       color: #16213e;
     }
-   
     input {
       padding: 12px;
       border-radius: 8px;
@@ -178,7 +164,6 @@
       color: white;
       width: 250px;
     }
-   
     button#start-button {
       background-color: #4CAF50;
       color: white;
@@ -189,30 +174,25 @@
       cursor: pointer;
       margin-top: 20px;
     }
-   
     h1 {
       color: #4cc9f0;
       font-size: 28px;
       margin-bottom: 15px;
     }
-   
     h2 {
       font-size: 22px;
       margin-bottom: 15px;
       color: #ffffff;
     }
-   
     .bible-verse {
       font-style: italic;
       color: #4cc9f0;
       margin-top: 15px;
       font-size: 16px;
     }
-   
     .hidden {
       display: none;
     }
-   
     .main-leaderboard {
       margin: 30px auto;
       max-width: 800px;
@@ -221,7 +201,6 @@
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
-   
     .main-leaderboard h3 {
       color: #4cc9f0;
       margin: 0 0 15px 0;
@@ -230,7 +209,6 @@
       border-bottom: 1px solid #4cc9f0;
       padding-bottom: 8px;
     }
-   
     .player-score {
       display: flex;
       justify-content: space-between;
@@ -239,15 +217,12 @@
       font-size: 16px;
       transition: all 0.3s;
     }
-   
     .player-score:hover {
       background: rgba(76, 201, 240, 0.1);
     }
-   
     .player-score:last-child {
       border-bottom: none;
     }
-   
     .player-name {
       color: white;
       white-space: nowrap;
@@ -255,35 +230,29 @@
       text-overflow: ellipsis;
       max-width: 60%;
     }
-   
     .player-points {
       color: #4cc9f0;
       font-weight: bold;
       margin-left: 10px;
     }
-   
     .rank-1 {
       background: rgba(255, 215, 0, 0.15);
       border-right: 3px solid gold;
     }
-   
     .rank-2 {
       background: rgba(192, 192, 192, 0.15);
       border-right: 3px solid silver;
     }
-   
     .rank-3 {
       background: rgba(205, 127, 50, 0.15);
       border-right: 3px solid #cd7f32;
     }
-   
     .no-scores {
       text-align: center;
       color: #aaa;
       padding: 20px;
       font-size: 16px;
     }
-    
     .wrong-answers-section {
       margin-top: 30px;
       text-align: right;
@@ -292,33 +261,27 @@
       border-radius: 10px;
       border-right: 3px solid #ff4d4d;
     }
-    
     .wrong-answers-title {
       color: #ff4d4d;
       font-size: 18px;
       margin-bottom: 10px;
     }
-    
     .wrong-answer-item {
       margin-bottom: 10px;
       padding: 10px;
       background: rgba(255, 77, 77, 0.1);
       border-radius: 5px;
     }
-    
     .question-text {
       font-weight: bold;
       margin-bottom: 5px;
     }
-    
     .your-answer {
       color: #ff4d4d;
     }
-    
     .correct-answer {
       color: #4cc9f0;
     }
-    
     .show-answers-btn {
       background: #ff4d4d;
       color: white;
@@ -329,11 +292,9 @@
       margin-top: 10px;
       transition: all 0.3s;
     }
-    
     .show-answers-btn:hover {
       background: #ff3333;
     }
-    
     .leaderboard-container {
       max-height: 300px;
       overflow-y: auto;
@@ -342,7 +303,6 @@
       border-radius: 8px;
       padding: 10px;
     }
-    
     .leaderboard-header {
       display: flex;
       justify-content: space-between;
@@ -350,52 +310,48 @@
       font-weight: bold;
       border-bottom: 1px solid #4cc9f0;
     }
-    
     .leaderboard-row {
       display: flex;
       justify-content: space-between;
       padding: 8px;
       border-bottom: 1px solid rgba(76, 201, 240, 0.2);
     }
-    
     .leaderboard-row:last-child {
       border-bottom: none;
     }
-    
     .rank {
       width: 30px;
       text-align: center;
     }
-    
     .name {
       flex: 1;
       text-align: right;
       padding-right: 15px;
     }
-    
     .score {
       width: 60px;
       text-align: center;
     }
-    
     .date {
       width: 100px;
       text-align: left;
       font-size: 12px;
       color: #aaa;
     }
-    
     .leaderboard-container::-webkit-scrollbar {
       width: 5px;
     }
-    
     .leaderboard-container::-webkit-scrollbar-track {
       background: #0a0a1a;
     }
-    
     .leaderboard-container::-webkit-scrollbar-thumb {
       background: #4cc9f0;
       border-radius: 5px;
+    }
+    #name-error {
+      color: #ff4444;
+      display: none;
+      margin-top: 5px;
     }
   </style>
 </head>
@@ -417,9 +373,10 @@
   <div id="start-screen">
     <h1>مرحبًا بكم في أسئلة الكتاب المقدس ✝️</h1>
     <p>اختبر معرفتك بالكتاب المقدس</p>
-    <input type="text" id="player-name" placeholder="اسمك الكريم" required />
+    <input type="text" id="player-name" placeholder="اكتب اسمك هنا" required />
+    <div id="name-error">الاسم يجب أن يكون بالعربية أو الإنجليزية فقط (بدون أرقام أو رموز)</div>
     <br />
-    <button id="start-button" onclick="startGame()">ابدأ اللعبة</button>
+    <button id="start-button" onclick="validateName()">ابدأ اللعبة</button>
    
     <div class="main-leaderboard" id="main-leaderboard">
       <h3>أفضل اللاعبين</h3>
@@ -492,8 +449,7 @@
       const playersRef = window.firebaseRef(window.firebaseDatabase, 'players');
       const playersQuery = window.firebaseQuery(
         playersRef,
-        window.firebaseOrderByChild('score'),
-        window.firebaseLimitToLast(10)
+        window.firebaseOrderByChild('score')
       );
       
       window.firebaseOnValue(playersQuery, (snapshot) => {
@@ -501,19 +457,49 @@
         snapshot.forEach((childSnapshot) => {
           const player = childSnapshot.val();
           player.id = childSnapshot.key;
-          players.unshift(player);
+          players.push(player);
         });
+        
+        players.sort((a, b) => {
+          if (b.score !== a.score) {
+            return b.score - a.score;
+          }
+          return new Date(a.date) - new Date(b.date);
+        });
+        
         updateLeaderboard();
       });
     }
 
-    function savePlayerToFirebase(name, score) {
-      const playersRef = window.firebaseRef(window.firebaseDatabase, 'players');
-      window.firebasePush(playersRef, {
-        name: name,
-        score: score,
-        date: new Date().toISOString()
-      });
+    function validateName() {
+      const nameInput = document.getElementById('player-name');
+      const errorDiv = document.getElementById('name-error');
+      const name = nameInput.value.trim();
+      
+      const validNameRegex = /^[\u0600-\u06FFa-zA-Z\s]+$/;
+      
+      if (!name) {
+        errorDiv.textContent = "يجب كتابة اسم";
+        errorDiv.style.display = "block";
+        return;
+      }
+      
+      if (!validNameRegex.test(name)) {
+        errorDiv.style.display = "block";
+        return;
+      }
+      
+      errorDiv.style.display = "none";
+      startGame();
+    }
+
+    function startGame() {
+      playerName = document.getElementById('player-name').value.trim();
+     
+      document.getElementById('main-leaderboard').classList.add('hidden');
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('question-container').classList.remove('hidden');
+      showQuestion();
     }
 
     const questions = [
@@ -609,21 +595,6 @@
       }
     ];
 
-    function startGame() {
-      playerName = document.getElementById('player-name').value.trim();
-     
-      if (!playerName) {
-        alert('من فضلك اكتب اسمك');
-        return;
-      }
-     
-      wrongAnswers = [];
-      document.getElementById('main-leaderboard').classList.add('hidden');
-      document.getElementById('start-screen').classList.add('hidden');
-      document.getElementById('question-container').classList.remove('hidden');
-      showQuestion();
-    }
-
     function showQuestion() {
       const container = document.getElementById('question-container');
       container.innerHTML = '';
@@ -689,40 +660,43 @@
           <h2>مبروك يا ${playerName}! كسبت بدرجة كاملة (15/15) 🎉</h2>
           <p>معرفتك العظيمة بالكتاب المقدس تفرح القلب!</p>
           <div class="bible-verse">كل الكتاب هو موحى به من الله ونافع للتعليم (2 تيموثاوس 3: 16)</div>
-          <button onclick="resetGame()" style="margin-top:20px; padding:10px 20px; background:#4cc9f0; color:#16213e; border:none; border-radius:5px; cursor:pointer;">
-            العودة للصفحة الرئيسية
-          </button>
+          ${generateWrongAnswersSection()}
+          <button onclick="resetGame()" class="restart-btn">العودة للصفحة الرئيسية</button>
         `;
       } else {
-        let resultHTML = `
+        result.innerHTML = `
           <h2>${playerName}، درجتك النهائية: ${score} من ${questions.length}</h2>
           <p>هذه فرصتك لقراءة المزيد من الكتاب المقدس!</p>
           <div class="bible-verse">كلمتك مصباح لرجلي ونور لسبيلي (مزمور 119: 105)</div>
+          ${generateWrongAnswersSection()}
+          <button onclick="resetGame()" class="restart-btn">العودة للصفحة الرئيسية</button>
         `;
-        
-        if (wrongAnswers.length > 0) {
-          resultHTML += `
-            <div class="wrong-answers-section">
-              <div class="wrong-answers-title">الأجوبة التي تحتاج مراجعة:</div>
-              ${wrongAnswers.map(answer => `
-                <div class="wrong-answer-item">
-                  <div class="question-text">${answer.question}</div>
-                  <div>إجابتك: <span class="your-answer">${answer.yourAnswer}</span></div>
-                  <div>الإجابة الصحيحة: <span class="correct-answer">${answer.correctAnswer}</span></div>
-                </div>
-              `).join('')}
-            </div>
-          `;
-        }
-        
-        resultHTML += `
-          <button onclick="resetGame()" style="margin-top:20px; padding:10px 20px; background:#4cc9f0; color:#16213e; border:none; border-radius:5px; cursor:pointer;">
-            العودة للصفحة الرئيسية
-          </button>
-        `;
-        
-        result.innerHTML = resultHTML;
       }
+    }
+
+    function generateWrongAnswersSection() {
+      if (wrongAnswers.length === 0) return '';
+      
+      let wrongAnswersHTML = `
+        <div class="wrong-answers-section">
+          <div class="wrong-answers-title">الأجوبة التي تحتاج مراجعة:</div>
+      `;
+      
+      wrongAnswers.forEach(answer => {
+        const questionIndex = questions.findIndex(q => q.text() === answer.question) + 1;
+        wrongAnswersHTML += `
+          <div class="wrong-answer-item">
+            <div class="question-text">السؤال ${questionIndex}: ${answer.question}</div>
+            <div>إجابتك: <span class="your-answer">${answer.yourAnswer}</span></div>
+            <div>الإجابة الصحيحة: <span class="correct-answer">${answer.correctAnswer}</span></div>
+            ${questions.find(q => q.text() === answer.question).verse ? 
+              `<div class="verse-hint">الآية: ${questions.find(q => q.text() === answer.question).verse}</div>` : ''}
+          </div>
+        `;
+      });
+      
+      wrongAnswersHTML += `</div>`;
+      return wrongAnswersHTML;
     }
 
     function resetGame() {
@@ -739,22 +713,37 @@
 
     function savePlayerResult(name, points) {
       const existingPlayerIndex = players.findIndex(p => p.name.toLowerCase() === name.toLowerCase());
-     
+      
       if (existingPlayerIndex !== -1) {
         if (points > players[existingPlayerIndex].score) {
           players[existingPlayerIndex].score = points;
           players[existingPlayerIndex].date = new Date().toISOString();
+          updatePlayerInFirebase(players[existingPlayerIndex]);
         }
       } else {
-        players.push({
+        const newPlayer = {
           name: name,
           score: points,
           date: new Date().toISOString()
-        });
+        };
+        players.push(newPlayer);
+        savePlayerToFirebase(newPlayer);
       }
-     
-      players.sort((a, b) => b.score - a.score || new Date(b.date) - new Date(a.date));
-      savePlayerToFirebase(name, points);
+    }
+
+    function updatePlayerInFirebase(player) {
+      const playerRef = window.firebaseRef(window.firebaseDatabase, `players/${player.id}`);
+      window.firebaseUpdate(playerRef, {
+        score: player.score,
+        date: player.date
+      });
+    }
+
+    function savePlayerToFirebase(player) {
+      const playersRef = window.firebaseRef(window.firebaseDatabase, 'players');
+      const newPlayerRef = window.firebasePush(playersRef);
+      player.id = newPlayerRef.key;
+      window.firebaseSet(newPlayerRef, player);
     }
 
     function updateLeaderboard() {
@@ -777,7 +766,7 @@
         row.className = `leaderboard-row rank-${index + 1}`;
         
         const dateObj = new Date(player.date);
-        const formattedDate = `${dateObj.getDate()}/${dateObj.getMonth() + 1}`;
+        const formattedDate = `${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear().toString().slice(-2)} ${dateObj.getHours()}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
         
         row.innerHTML = `
           <span class="rank">${index + 1}</span>
